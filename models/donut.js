@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const donutSchema = new Schema({
-    name: String,
+    name: {type: String, required: true},
 });
 
-const Donut = mongoos.model('Donut', donutSchema);
+const Donut = mongoose.model('Donut', donutSchema);
 
 module.exports = Donut;

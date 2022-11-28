@@ -9,6 +9,7 @@ function create(req, res) {
 
     donut.save((err, donut) => {
         if(err) {
+            console.log(err);
             let result = {
                 status: 'error',
                 message: err.message
