@@ -2,10 +2,17 @@ const Donut = require('../models/donut');
 
 //create donut
 function create(req, res) {
-    let name = req.body.name;
-
     let donut = new Donut();
-    donut.name = name;
+    donut.name = req.body.name;
+    donut.base = req.body.base;
+    donut.glaze = req.body.glaze;
+    donut.logo = req.body.logo;
+    donut.sprinkles = req.body.sprinkles;
+    donut.amount = req.body.amount;
+    donut.date = Date.now();
+    donut.description = req.body.description;
+    donut.status = req.body.status;
+    donut.makerMail = req.body.makerMail;
 
     donut.save((err, donut) => {
         if(err) {

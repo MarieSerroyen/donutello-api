@@ -10,7 +10,8 @@ const donutSchema = new Schema({
     amount: Number,
     date: Date,
     description: String,
-    status: String
+    status: String,
+    makerMail: String
 });
 
 const Donut = mongoose.model('Donut', donutSchema);
