@@ -1,13 +1,20 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const { token } = require('morgan');
+const bcrypt = require('bcrypt');
 
 //create user
-const create = (req, res) => {
+const create = async (req, res) => {
     let user = new User();
     
     user.mail = req.body.mail;
     user.password = req.body.password;
+
+    //generate salt to hash password
+    const salt = await bcrypt.genSalt(10);
+
+    //hash and set password
+    user.password = await bcrypt.hash(user.password, salt);
 
     user.save((err, user) => {
         if(err) {
@@ -42,7 +49,7 @@ const login = async (req, res) => {
         let token = jwt.sign({
             uid: user._id,
         }, "VerySecretKey");
-        
+
         let result = {
             status: 'success',
             message: 'User found in database',
