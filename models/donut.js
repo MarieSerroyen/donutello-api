@@ -6,12 +6,13 @@ const donutSchema = new Schema({
     base: String,
     glaze: String,
     logo: String,
-    sprinkles: Boolean,
+    topping: Boolean,
     amount: Number,
     date: Date,
     description: String,
     status: String,
-    makerMail: String
+    makerMail: String,
+    donut: String
 });
 
 const Donut = mongoose.model('Donut', donutSchema);
