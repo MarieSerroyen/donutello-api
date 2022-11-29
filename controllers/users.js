@@ -28,4 +28,24 @@ const create = (req, res) => {
     }); 
 }
 
+const login = async (req, res) => {
+    const user = await User.findOne({ mail: req.body.mail });
+
+    if (user) {
+        let result = {
+            status: 'success',
+            message: 'User found in database',
+        }
+        res.json(result);
+    } else {
+        let result = {
+            status: 'error',
+            message: 'User not found in database',
+        }
+        res.json(result);
+    }
+
+}
+
 module.exports.create = create;
+module.exports.login = login;
