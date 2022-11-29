@@ -8,8 +8,8 @@ const cors = require('cors');
 const config = require('config');
 
 
-const donuts = require('./routes/donuts');
-const users = require('./routes/users');
+const donutRouter = require('./routes/donuts');
+const userRouter = require('./routes/users');
 
 mongoose.connect(config.get('Database.conn'))
 const app = express();
@@ -25,8 +25,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api/v1/donuts', donuts);
-app.use('/api/v1/users', users);
+app.use('/api/v1/donuts', donutRouter);
+app.use('/api/v1/users', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
