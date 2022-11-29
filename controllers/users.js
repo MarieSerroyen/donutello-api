@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const { token } = require('morgan');
 
 //create user
 const create = (req, res) => {
@@ -38,9 +39,16 @@ const login = async (req, res) => {
     const user = await User.findOne({ mail: req.body.mail });
 
     if (user) {
+        let token = jwt.sign({
+            uid: user._id,
+        }, "VerySecretKey");
+        
         let result = {
             status: 'success',
             message: 'User found in database',
+            data: {
+                "token": token
+            }
         }
         res.json(result);
     } else {
