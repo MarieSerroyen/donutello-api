@@ -5,11 +5,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
+const config = require('config');
 
 
 const donuts = require('./routes/donuts');
 
-mongoose.connect('mongodb://localhost:27017/donuttello')
+mongoose.connect(config.get('Database.conn'))
 const app = express();
 
 // view engine setup
