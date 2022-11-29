@@ -27,7 +27,7 @@ const create = (req, res) => {
                 status: 'success',
                 message: 'Donut created',
                 data: {
-                    donut: donut
+                    "donut": donut
                 }
             }
             res.json(result);
@@ -53,7 +53,7 @@ const updateDonutStatus = (req, res) => {
                     status: 'success',
                     message: 'Status updated',
                     data: {
-                        donut: donut
+                        "donut": donut
                     }
                 }
                 res.json(result);

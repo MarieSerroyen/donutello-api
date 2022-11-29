@@ -17,6 +17,7 @@ const create = (req, res) => {
             }
             res.json(result);
         } else {
+            //console.log(user._id)
             let token = jwt.sign({
                 uid: user._id,
             }, "VerySecretKey");
@@ -25,8 +26,7 @@ const create = (req, res) => {
                 status: 'success',
                 message: 'User created',
                 data: {
-                    user: user,
-                    token: token
+                    "token": token                    
                 }
             }
             res.json(result);
