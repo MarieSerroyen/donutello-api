@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
 
 //create user
 const create = (req, res) => {
@@ -16,11 +17,16 @@ const create = (req, res) => {
             }
             res.json(result);
         } else {
+            let token = jwt.sign({
+                uid: user._id,
+            }, "VerySecretKey");
+
             let result = {
                 status: 'success',
                 message: 'User created',
                 data: {
-                    user: user
+                    user: user,
+                    token: token
                 }
             }
             res.json(result);
