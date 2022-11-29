@@ -1,15 +1,15 @@
 const passport = require('passport');
+const User = require('../models/user');
 
 //Webtoken strategy (JWT
 const JwtStrategy = require('passport-jwt').Strategy,
     ExtractJwt = require('passport-jwt').ExtractJwt;
 const opts = {}
-opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = 'secret';
-opts.issuer = 'accounts.examplesoft.com';
-opts.audience = 'yoursite.net';
-passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-    User.findOne({id: jwt_payload.sub}, function(err, user) {
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken(); //key uit de headers halen
+opts.secretOrKey = 'VerySecretKey'; //key om te decrypten
+
+passport.use(new JwtStrategy(opts, function(jwt_payload, done) { //payload/token binnen
+    User.findOne({_id: jwt_payload.uid}, function(err, user) {
         if (err) {
             return done(err, false);
         }
@@ -21,3 +21,5 @@ passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
         }
     });
 }));
+
+module.exports = passport;
