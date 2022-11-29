@@ -36,25 +36,28 @@ const create = (req, res) => {
 }
 
 const updateDonutStatus = (req, res) => {
-    Donut.findOneAndUpdate({ _id: req.params.id }, { status
-    : req.body.status }, { new: true }, (err, donut) => {
-        if (err) {
-            console.log(err);
-            let result = {
-                status: 'error',
-                message: err.message
-            }
-            res.json(result);
-        } else {
-            let result = {
-                status: 'success',
-                message: 'Donut updated',
-                data: {
-                    donut: donut
+    Donut.findByIdAndUpdate(
+        { _id: req.params.id }, 
+        { status: req.body.status }, 
+        { new: true }, 
+        (err, donut) => {
+            if (err) {
+                console.log(err);
+                let result = {
+                    status: 'error',
+                    message: err.message
                 }
+                res.json(result);
+            } else {
+                let result = {
+                    status: 'success',
+                    message: 'Status updated',
+                    data: {
+                        donut: donut
+                    }
+                }
+                res.json(result);
             }
-            res.json(result);
-        }
     });
 }
 
