@@ -113,27 +113,9 @@ const getDonuts = (req, res) => {
     
     if (req.query.company) {
         const company = req.query.company;
-        const response = {
-            status: 'success',
-            message: 'Donuts retrieved',
-            data: {
-                "donuts": company
-            }
-        }
-        res.json(response);
+        query = { company: company };
     }
-    if (req.query.datetime) {
-        const datetime = req.query.datetime;
-        const response = {
-            status: 'success',
-            message: 'Donuts retrieved',
-            data: {
-                "donuts": datetime
-            }
-        }
-        res.json(response);
-    }
-
+    
     Donut.find (query,(err, donuts) => {
         if (err) {
             console.log(err);
