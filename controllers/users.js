@@ -68,5 +68,42 @@ const login = async (req, res) => {
 
 }
 
+// change password user
+const changePassword = async (req, res) => { 
+    let password = req.body.password;
+    
+    //generate salt to hash password
+    const salt = await bcrypt.genSalt(10);
+    //hash and set password
+    password = await bcrypt.hash(password, salt);
+    
+    User.findByIdAndUpdate(
+        { _id: req.params.id }, 
+        { password: password }, 
+        { new: true }, 
+        (err, user) => {
+          
+            if (err) {
+                console.log(err);
+                let result = {
+                    status: 'error',
+                    message: err.message
+                }
+                res.json(result);
+            } else {
+                 
+                let result = {
+                    status: 'success',
+                    message: 'Password updated',
+                  
+
+                }
+                res.json(result);
+            }
+    });
+}
+
+
 module.exports.create = create;
 module.exports.login = login;
+module.exports.changePassword = changePassword;
