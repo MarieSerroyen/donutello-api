@@ -81,7 +81,15 @@ const getDonuts = (req, res) => {
         res.json(response);
     }
     if (req.query.datetime) {
-        query.date = { date: { $gt: datetime } };
+        const datetime = req.query.datetime;
+        const response = {
+            status: 'success',
+            message: 'Donuts retrieved',
+            data: {
+                "donuts": datetime
+            }
+        }
+        res.json(response);
     }
     Donut.find (query,(err, donuts) => {
         if (err) {
