@@ -63,5 +63,31 @@ const updateDonutStatus = (req, res) => {
     });
 }
 
+// delete donut by id
+const deleteDonut = (req, res) => {
+    Donut.findByIdAndRemove(req.params.id, (err, donut) => {
+        if (err) {
+            console.log(err);
+            let result = {
+                status: 'error',
+                message: err.message
+            }
+            res.json(result);
+        } else {
+            let result = {
+                status: 'success',
+                message: 'Donut deleted',
+                data: {
+                    "donut": donut
+                }
+            }
+            res.json(result);
+        }
+    });
+}
+
+
+
 module.exports.create = create;
 module.exports.updateDonutStatus = updateDonutStatus;
+module.exports.deleteDonut = deleteDonut;
