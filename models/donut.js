@@ -6,11 +6,13 @@ const donutSchema = new Schema({
     base: String,
     glaze: String,
     logo: String,
+    cardType: String,
     topping: Boolean,
     amount: Number,
     date: Date,
     description: String,
     status: String,
+    company: String,
     makerMail: String,
     donut: String
 });
