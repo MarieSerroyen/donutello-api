@@ -7,11 +7,13 @@ const create = (req, res) => {
     donut.base = req.body.base;
     donut.glaze = req.body.glaze;
     donut.logo = req.body.logo;
+    donut.cardType = req.body.cardType;
     donut.sprinkles = req.body.sprinkles;
     donut.amount = req.body.amount;
     donut.date = Date.now();
     donut.description = req.body.description;
     donut.status = req.body.status;
+    donut.company = req.body.company;
     donut.makerMail = req.body.makerMail;
 
     donut.save((err, donut) => {
