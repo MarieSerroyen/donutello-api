@@ -6,6 +6,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 const config = require('config');
+const rateLimit = require("express-rate-limit");
+
 
 
 const donutRouter = require('./routes/donuts');
@@ -24,7 +26,14 @@ app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(
+  rateLimit({
+    windowMs: 12 * 60 * 60 * 1000, // 12 hour duration in milliseconds
+    max: 5,
+    message: "You exceeded 100 requests in 12 hour limit!",
+    headers: true,
+  })
+);
 app.use('/api/v1/donuts', donutRouter);
 app.use('/api/v1/users', userRouter);
 
