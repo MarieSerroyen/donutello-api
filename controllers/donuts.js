@@ -86,35 +86,36 @@ const deleteDonut = (req, res) => {
     });
 }
 
+const getDonutById = (req, res) => {
+    Donut.findById(req.params.id, (err, donut) => {
+        if (err) {  
+            console.log(err);
+            let result = {
+                status: 'error',
+                message: err.message
+            }
+            res.json(result);
+        } else {
+            let result = {
+                status: 'success',
+                message: 'Donut found',
+                data: {
+                    "donut": donut
+                }
+            }
+            res.json(result);
+        }
+    });
+}
+
 const getDonuts = (req, res) => {
     let query = {};
     
-    if (req.query.id) {
-        query.id = req.query.id;
-    }
     if (req.query.company) {
         const company = req.query.company;
-        const response = {
-            status: 'success',
-            message: 'Donuts retrieved',
-            data: {
-                "donuts": company
-            }
-        }
-        res.json(response);
+        query = { company: company };
     }
-    if (req.query.datetime) {
-        const datetime = req.query.datetime;
-        const response = {
-            status: 'success',
-            message: 'Donuts retrieved',
-            data: {
-                "donuts": datetime
-            }
-        }
-        res.json(response);
-    }
-
+    
     Donut.find (query,(err, donuts) => {
         if (err) {
             console.log(err);
@@ -139,4 +140,5 @@ const getDonuts = (req, res) => {
 module.exports.create = create;
 module.exports.updateDonutStatus = updateDonutStatus;
 module.exports.deleteDonut = deleteDonut;
+module.exports.getDonutById = getDonutById;
 module.exports.getDonuts = getDonuts;

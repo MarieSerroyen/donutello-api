@@ -6,6 +6,7 @@ const donutController = require('../controllers/donuts');
 router.post('/', donutController.create);
 router.put('/:id', passport.authenticate('jwt', {session: false}), donutController.updateDonutStatus);
 router.delete('/:id', passport.authenticate('jwt', {session: false}), donutController.deleteDonut);
+router.get('/:id', passport.authenticate('jwt', {session: false}), donutController.getDonutById);
 router.get('/', passport.authenticate('jwt', {session: false}), donutController.getDonuts);
 
 module.exports = router;
