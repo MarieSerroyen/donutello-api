@@ -11,10 +11,10 @@ const create = async (req, res) => {
     user.password = req.body.password;
 
     //generate salt to hash password
-    const salt = await bcrypt.genSalt(10);
+   // const salt = await bcrypt.genSalt(10);
 
     //hash and set password
-    user.password = await bcrypt.hash(user.password, salt);
+    //user.password = await bcrypt.hash(user.password, salt);
 
     user.save((err, user) => {
         if(err) {
@@ -72,18 +72,20 @@ const login = async (req, res) => {
 const changePassword = async (req, res) => { 
     let password = req.body.password;
     
+const checkPassword = await User.findOne({ password: req.body.password });
+
+
     //generate salt to hash password
-    const salt = await bcrypt.genSalt(10);
+    //const salt = await bcrypt.genSalt(10);
     //hash and set password
-    password = await bcrypt.hash(password, salt);
-    
+    //password = await bcrypt.hash(password, salt);
     User.findByIdAndUpdate(
         { _id: req.params.id }, 
         { password: password }, 
         { new: true }, 
         (err, user) => {
           
-            if (err) {
+            if (!checkPassword) {
                 console.log(err);
                 let result = {
                     status: 'error',
@@ -102,7 +104,7 @@ const changePassword = async (req, res) => {
             }
     });
 }
-
+  
 
 module.exports.create = create;
 module.exports.login = login;
