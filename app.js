@@ -11,7 +11,7 @@ const rateLimit = require("express-rate-limit");
 const donutRouter = require('./routes/donuts');
 const userRouter = require('./routes/users');
 
-mongoose.connect(process.env.dbconn || config.get('Database.conn'))
+mongoose.connect(config.get('Database.conn'))
 const app = express();
 
 // view engine setup
