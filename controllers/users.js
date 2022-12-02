@@ -47,18 +47,29 @@ const login = async (req, res) => {
     const user = await User.findOne({ mail: req.body.mail });
 
     if (user) {
-        let token = jwt.sign({
-            uid: user._id,
-        }, "VerySecretKey");
+        const validPassword = await bcrypt.compare(req.body.password, user.password);
 
-        let result = {
-            status: 'success',
-            message: 'User found in database',
-            data: {
-                "token": token
+        if (validPassword) {
+            let token = jwt.sign({
+                uid: user._id,
+            }, "VerySecretKey");
+    
+            let result = {
+                status: 'success',
+                message: 'Can login',
+                data: {
+                    "token": token
+                }
             }
+            res.json(result);
+        } else {
+            let result = {
+                status: 'error',
+                message: 'Wrong password'
+            }
+            res.json(result);
         }
-        res.json(result);
+        
     } else {
         let result = {
             status: 'error',
@@ -66,12 +77,10 @@ const login = async (req, res) => {
         }
         res.json(result);
     }
-
 }
 
 // change password user
 const changePassword = async (req, res) => { 
-
     try {
         const v = new Validator(req.body, {
             old_password: 'required',
@@ -135,41 +144,6 @@ const changePassword = async (req, res) => {
         }
         res.json(result);
     }
-
-
-    /*let password = req.body.password;
-    
-    const checkPassword = await User.findOne({ password: password });
-
-
-    //generate salt to hash password
-    //const salt = await bcrypt.genSalt(10);
-    //hash and set password
-    //password = await bcrypt.hash(password, salt);
-    User.findByIdAndUpdate(
-        { _id: req.params.id }, 
-        { password: password }, 
-        { new: true }, 
-        (err, user) => {
-          
-            if (!checkPassword) {
-                console.log(err);
-                let result = {
-                    status: 'error',
-                    message: err.message
-                }
-                res.json(result);
-            } else {
-                 
-                let result = {
-                    status: 'success',
-                    message: 'Password updated',
-                  
-
-                }
-                res.json(result);
-            }
-    });*/
 }
   
 
