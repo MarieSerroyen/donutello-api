@@ -9,6 +9,7 @@ const config = require('config');
 const create = async (req, res) => {
     let user = new User();
     
+    user.username = req.body.username;
     user.mail = req.body.mail;
     user.password = req.body.password;
 
