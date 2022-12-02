@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const { token } = require('morgan');
 const bcrypt = require('bcrypt');
 const { Validator } = require('node-input-validator');
+const config = require('config');
 
 //create user
 const create = async (req, res) => {
@@ -29,7 +30,7 @@ const create = async (req, res) => {
             //console.log(user._id)
             let token = jwt.sign({
                 uid: user._id,
-            }, "VerySecretKey");
+            }, config.get('jwt.secret'));
 
             let result = {
                 status: 'success',
@@ -52,7 +53,7 @@ const login = async (req, res) => {
         if (validPassword) {
             let token = jwt.sign({
                 uid: user._id,
-            }, "VerySecretKey");
+            }, config.get('jwt.secret'));
     
             let result = {
                 status: 'success',

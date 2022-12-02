@@ -8,8 +8,6 @@ const cors = require('cors');
 const config = require('config');
 const rateLimit = require("express-rate-limit");
 
-
-
 const donutRouter = require('./routes/donuts');
 const userRouter = require('./routes/users');
 
