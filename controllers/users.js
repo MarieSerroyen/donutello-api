@@ -2,6 +2,7 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const { token } = require('morgan');
 const bcrypt = require('bcrypt');
+const { Validator } = require('node-input-validator');
 
 //create user
 const create = async (req, res) => {
@@ -70,6 +71,23 @@ const login = async (req, res) => {
 
 // change password user
 const changePassword = async (req, res) => { 
+
+    const v = new Validator(req.body, {
+        old_password: 'required',
+        new_password: 'required',
+        confirm_password: 'required|same:new_password'
+    });
+
+    const matched = await v.check();
+
+    if (!matched) {
+        let result = {
+            status: 'error',
+            message: v.errors
+        }
+        res.json(result);
+    }
+
     let password = req.body.password;
     
     const checkPassword = await User.findOne({ password: password });
