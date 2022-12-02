@@ -12,10 +12,10 @@ const create = async (req, res) => {
     user.password = req.body.password;
 
     //generate salt to hash password
-   // const salt = await bcrypt.genSalt(10);
+    const salt = await bcrypt.genSalt(10);
 
     //hash and set password
-    //user.password = await bcrypt.hash(user.password, salt);
+    user.password = await bcrypt.hash(user.password, salt);
 
     user.save((err, user) => {
         if(err) {
@@ -72,23 +72,72 @@ const login = async (req, res) => {
 // change password user
 const changePassword = async (req, res) => { 
 
-    const v = new Validator(req.body, {
-        old_password: 'required',
-        new_password: 'required',
-        confirm_password: 'required|same:new_password'
-    });
+    try {
+        const v = new Validator(req.body, {
+            old_password: 'required',
+            new_password: 'required',
+            confirm_password: 'required|same:new_password'
+        });
+    
+        const matched = await v.check();
+    
+        if (!matched) {
+            let result = {
+                status: 'error',
+                message: v.errors
+            }
+            res.json(result);
+        }
 
-    const matched = await v.check();
+        let current_user = await User.findById(req.params.id);
 
-    if (!matched) {
+        const validPassword = await bcrypt.compare(req.body.old_password, current_user.password);
+
+        if (!validPassword) {
+            let result = {
+                status: 'error',
+                message: 'Old password is not correct'
+            }
+            res.json(result);
+        } else {
+            //generate salt to hash password
+            const salt = await bcrypt.genSalt(10);
+
+            //hash and set password
+            current_user.password = await bcrypt.hash(req.body.new_password, salt);
+
+            current_user.save((err, user) => {
+                if(err) {
+                    console.log(err);
+                    let result = {
+                        status: 'error',
+                        message: err.message
+                    }
+                    res.json(result);
+                } else {
+                    let result = {
+                        status: 'success',
+                        message: 'Password changed',
+                        data: {
+                            "user": user
+                        }
+                    }
+                    res.json(result);
+                }
+            }); 
+        }
+    }
+    catch (err) {
+        console.log(err);
         let result = {
             status: 'error',
-            message: v.errors
+            message: err.message
         }
         res.json(result);
     }
 
-    let password = req.body.password;
+
+    /*let password = req.body.password;
     
     const checkPassword = await User.findOne({ password: password });
 
@@ -120,7 +169,7 @@ const changePassword = async (req, res) => {
                 }
                 res.json(result);
             }
-    });
+    });*/
 }
   
 

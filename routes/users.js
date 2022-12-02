@@ -5,6 +5,6 @@ const passport = require('./../passport/passport');
 
 router.post('/', userController.create);
 router.post('/login', userController.login);
-router.put('/:id',passport.authenticate('jwt', {session: false}), userController.changePassword);
+router.post('/:id',passport.authenticate('jwt', {session: false}), userController.changePassword);
 
 module.exports = router;
