@@ -72,7 +72,7 @@ const login = async (req, res) => {
 const changePassword = async (req, res) => { 
     let password = req.body.password;
     
-const checkPassword = await User.findOne({ password: req.body.password });
+    const checkPassword = await User.findOne({ password: password });
 
 
     //generate salt to hash password
