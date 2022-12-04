@@ -60,7 +60,8 @@ const login = async (req, res) => {
                 status: 'success',
                 message: 'Can login',
                 data: {
-                    "token": token
+                    "token": token,
+                    "id": user._id
                 }
             }
             res.json(result);
