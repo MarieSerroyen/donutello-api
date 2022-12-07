@@ -15,6 +15,7 @@ const create = (req, res) => {
     donut.status = req.body.status;
     donut.company = req.body.company;
     donut.makerMail = req.body.makerMail;
+    donut.donutImage = req.body.donutImage;
 
     donut.save((err, donut) => {
         if(err) {

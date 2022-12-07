@@ -14,7 +14,7 @@ const donutSchema = new Schema({
     status: String,
     company: String,
     makerMail: String,
-    donut: String
+    donutImage: String
 });
 
 const Donut = mongoose.model('Donut', donutSchema);
