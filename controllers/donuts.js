@@ -8,7 +8,7 @@ const create = (req, res) => {
     donut.glaze = req.body.glaze;
     donut.logo = req.body.logo;
     donut.cardType = req.body.cardType;
-    donut.sprinkles = req.body.sprinkles;
+    donut.topping = req.body.topping;
     donut.amount = req.body.amount;
     donut.date = Date.now();
     donut.description = req.body.description;

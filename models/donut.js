@@ -7,7 +7,7 @@ const donutSchema = new Schema({
     glaze: String,
     logo: String,
     cardType: String,
-    topping: Boolean,
+    topping: String,
     amount: Number,
     date: Date,
     description: String,
