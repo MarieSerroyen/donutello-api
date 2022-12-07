@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   rateLimit({
     windowMs: 12 * 60 * 60 * 1000, // 12 hour duration in milliseconds
-    max: 50, // limit each IP to 50 requests per windowMs
+    max: 1000, // limit each IP to 50 requests per windowMs
     message: "You exceeded 50 requests in 12 hour limit!",
     headers: true,
   })
