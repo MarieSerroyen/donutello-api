@@ -68,7 +68,7 @@ const login = async (req, res) => {
         } else {
             let result = {
                 status: 'error',
-                message: 'Wrong password'
+                message: 'Deze email en wachtwoord combinatie bestaat niet, probeer het opnieuw.'
             }
             res.json(result);
         }
@@ -76,7 +76,7 @@ const login = async (req, res) => {
     } else {
         let result = {
             status: 'error',
-            message: 'User not found in database',
+            message: 'Deze email en wachtwoord combinatie bestaat niet, probeer het opnieuw.',
         }
         res.json(result);
     }
