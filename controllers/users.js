@@ -96,7 +96,7 @@ const changePassword = async (req, res) => {
         if (!matched) {
             let result = {
                 status: 'error',
-                message: v.errors
+                message: 'Nieuw wachtwoord en bevestig wachtwoord komen niet overeen.'
             }
             res.json(result);
         }
@@ -108,7 +108,7 @@ const changePassword = async (req, res) => {
         if (!validPassword) {
             let result = {
                 status: 'error',
-                message: 'Old password is not correct'
+                message: 'Oud wachtwoord is niet correct.'
             }
             res.json(result);
         } else {
@@ -129,7 +129,7 @@ const changePassword = async (req, res) => {
                 } else {
                     let result = {
                         status: 'success',
-                        message: 'Password changed',
+                        message: 'Wachtwoord is succesvol gewijzigd. U wordt automatisch uitgelogd.',
                         data: {
                             "user": user
                         }
