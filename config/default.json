@@ -1,8 +1,0 @@
-{
-    "Database": {
-        "conn": "mongodb+srv://donuttelloteam6:3VMD6dbkd3pr1JPB@cluster0.omkts2w.mongodb.net/?retryWrites=true&w=majority"
-    },
-    "jwt": {
-        "secret": "VerySecretKey"
-    }
-}
